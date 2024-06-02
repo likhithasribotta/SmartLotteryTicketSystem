@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sold Tickets</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    {% include 'nav/seller_navbar.html' %}
+    <div class="container mt-4">
+        <h1 class="mb-4 text-center text-info">Orders</h1>
+        <div class="row">
+            {% for ticket in purchased_tickets %}
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Coupon Name: {{ ticket.coupon_name }}</h5>
+                        <p class="card-text">Customer Name: {{ ticket.customer_name }}</p>
+                        <p class="card-text">Ticket Price: {{ ticket.ticket_price }}</p>
+                        <p class="card-text">Purchase ID: {{ ticket.purchase_id }}</p>
+                        <p class="card-text">Purchase Time: {{ ticket.timestamp }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!-- added_tickets.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Added Tickets</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    {% include 'nav/seller_navbar.html' %}
+    <div class="container">
+        <h1 class="mt-5">Added Tickets</h1>
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Ticket ID</th>
+                    <th scope="col">Coupon Name</th>
+                    <th scope="col">From Date</th>
+                    <th scope="col">To Date</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price Money</th>
+                    <th scope="col">Ticket Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ ticket.ticket_id }}</td>
+                    <td>{{ ticket.coupon_name }}</td>
+                    <td>{{ ticket.from_date }}</td>
+                    <td>{{ ticket.to_date }}</td>
+                    <td>{{ ticket.description }}</td>
+                    <td>{{ ticket.price_money }}</td>
+                    <td>{{ ticket.ticket_price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

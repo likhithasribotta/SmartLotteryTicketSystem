@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Admin Dashboard</title>
+</head>
+<body>
+    {% include 'nav/seller_navbar.html' %}
+    <h1>Seller Admin Dashboard</h1>
+    <p>Total Tickets Sold: {{ data.total_tickets_sold }}</p>
+    <p>Total Profit: {{ data.total_profit }}</p>
+    <p>Current Lottery Status: {{ data.current_lottery_status }}</p>
+</body>
+</html>

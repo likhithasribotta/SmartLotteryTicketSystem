@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Winner</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4 text-center text-info">Select Winner</h1>
+
+        <!-- Winner Display -->
+        <div id="winnerDisplay" class="mb-4">
+            <p>Winner Name: <span id="winnerName">-</span></p>
+            <p>Customer ID: <span id="customerId">-</span></p>
+            <p>Purchase ID: <span id="purchaseId">-</span></p>
+            <p>Coupon Name: <span id="couponName">-</span></p>
+            <p>Ticket Price: <span id="ticketPrice">-</span></p>
+        </div>
+
+        <!-- Spinner Image -->
+        <div class="text-center mt-4">
+            <img id="spinner" src="https://i.gifer.com/ZKZg.gif" alt="Spinner"
+                style="width: 100px; height: 100px; transition: transform 3s ease-out;">
+        </div>
+
+        <!-- Button to Spin and Select Winner -->
+        <div class="text-center mt-4">
+            <button type="button" class="btn btn-primary" onclick="spinAndSelectWinner()" id="spinButton">
+                Spin to Select Winner
+            </button>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+       function spinAndSelectWinner() {
+        // Rotate the spinner
+        const spinner = document.getElementById('spinner');
+        spinner.style.transform = 'rotate(3600deg)';  // Rotate 3600 degrees for multiple spins
+
+        // Disable the button during spinning
+        const button = document.getElementById('spinButton');
+        button.disabled = true;
+
+        // Wait for spinning to complete
+        setTimeout(() => {
+            fetch('/select_winner', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        const winner = data.winner;
+                        document.getElementById('winnerName').innerText = winner.winner_name;
+                        document.getElementById('customerId').innerText = winner.customer_id;
+                        document.getElementById('purchaseId').innerText = winner.purchase_id;
+                        document.getElementById('couponName').innerText = winner.coupon_name;
+                        document.getElementById('ticketPrice').innerText = winner.ticket_price;
+                        alert(`Winner selected: ${winner.winner_name}`);
+                    } else {
+                        alert(`Error: ${data.message}`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Network error or server issue. Please try again.');
+                })
+                .finally(() => {
+                    // Enable the button after spinning and winner selection
+                    button.disabled = false;
+                    spinner.style.transform = 'none';  // Reset spinner rotation
+                });
+        }, 3500);  // Wait for 3.5 seconds
+    }
+    </script>
+</body>
+
+</html>

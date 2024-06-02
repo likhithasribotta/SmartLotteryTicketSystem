@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    {% include 'nav/seller_navbar.html' %}
+    <div class="container mt-4">
+        <h1 class="mb-4 text-center text-info">Customers Who Purchased Tickets</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Number</th>
+                    <th>Address</th>
+                    <th>Coupon Name</th>
+                    <th>Ticket Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers_details %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ customer.customer_name }}</td>
+                    <td>{{ customer.number }}</td>
+                    <td>{{ customer.address }}</td>
+                    <td>{{ customer.coupon_name }}</td>
+                    <td>{{ customer.ticket_price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

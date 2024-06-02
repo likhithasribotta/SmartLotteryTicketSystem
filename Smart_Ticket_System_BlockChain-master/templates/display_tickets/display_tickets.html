@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Tickets</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4 text-center text-info">Buy Lottery Tickets Online</h1>
+        <h3 class="text-center">You can easily, safely and legally buy lottery tickets online to your favourite local
+            and international lotteries!</h3>
+        <div class="row">
+            {% for ticket in tickets %}
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ ticket.coupon_name }}</h5>
+                        <p class="card-text">From: {{ ticket.from_date }} - To: {{ ticket.to_date }}</p>
+                        <p class="card-text">Description: {{ ticket.description }}</p>
+                        <p class="card-text">Price Money: {{ ticket.price_money }}</p>
+                        <p class="card-text">Price: {{ ticket.ticket_price }}</p>
+                        <!-- "Buy Now" button -->
+                        <button type="button" class="btn btn-primary"
+                            onclick="purchaseTicket('{{ ticket.coupon_name }}', '{{ ticket.ticket_price }}')">
+                            Buy Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function purchaseTicket(coupon_name, ticket_price) {
+            const selected_ticket = {
+                'coupon_name': coupon_name,
+                'ticket_price': ticket_price,
+                'customer_name': '{{ session.user.name }}'
+            };
+
+            fetch('/purchase_ticket', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(selected_ticket)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(`Ticket "${selected_ticket.coupon_name}" purchased successfully for "${selected_ticket.ticket_price}"!`);
+                    } else {
+                        alert('Error purchasing ticket. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error purchasing ticket. Please try again.');
+                });
+        }
+    </script>
+</body>
+
+</html>
